@@ -15,14 +15,25 @@ public class Controller : MonoBehaviour {
     new BoxCollider2D collider;
     RaycastOrigins raycastOrigins;
 
+    public CollisionInfo collisionInfo;
+
     void Start() {
         collider = GetComponent<BoxCollider2D>();
         CalculateRaySpacing();              // maybe put back in update if needed
     }
 
-    void Update() {
+    public void Move(Vector3 velocity) {
+        UpdateRaycastOrigins();
+        collisionInfo.Reset();
+        if (velocity.x != 0) {
+            HorizontalCollisions(ref velocity);
+        }
 
-        
+        if (velocity.y != 0) {
+            VerticalCollisions(ref velocity);
+        }
+
+        transform.Translate(velocity);
     }
 
     void HorizontalCollisions(ref Vector3 velocity) {
@@ -38,8 +49,14 @@ public class Controller : MonoBehaviour {
             Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
  
             if (hit) {
+                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
                 velocity.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
+
+                collisionInfo.left = directionX == -1; // if hit something going left then collisionInfo.left is true
+                collisionInfo.right = directionX == 1; // if hit something going right then collisionInfo.right is true
+
             }
         }
         
@@ -60,22 +77,12 @@ public class Controller : MonoBehaviour {
             if (hit) {
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
+
+                collisionInfo.below = directionY == -1; // if hit something going down then collisionInfo.below is true
+                collisionInfo.above = directionY == 1; // if hit something going up then collisionInfo.above is true
             }
         }
         
-    }
-
-    public void Move(Vector3 velocity) {
-        UpdateRaycastOrigins();
-        if(velocity.x != 0) {
-            HorizontalCollisions(ref velocity);
-        }
-        
-        if(velocity.y != 0) {
-            VerticalCollisions(ref velocity);
-        }
-        
-        transform.Translate(velocity);
     }
 
     void UpdateRaycastOrigins() {
@@ -102,5 +109,14 @@ public class Controller : MonoBehaviour {
 
     struct RaycastOrigins {
         public Vector2 topLeft, topRight, bottomLeft, bottomRight;
+    }
+
+    public struct CollisionInfo {
+        public bool above, below, left, right;
+
+        public void Reset() {
+            above = below = false;
+            left = right = false;
+        }
     }
 }
