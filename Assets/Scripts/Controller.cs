@@ -10,6 +10,9 @@ public class Controller : MonoBehaviour {
     public int horizontalRayCount = 4;
     public int verticalRayCount = 4;
 
+    float exclusionAngleMin = 80;
+    float exclusionAngleMax = 100;
+
     float horizontalRaySpacing;
     float verticalRaySpacing;
     new BoxCollider2D collider;
@@ -46,10 +49,17 @@ public class Controller : MonoBehaviour {
             rayOrigin += Vector2.up * (horizontalRaySpacing * i);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
-            Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
+            Debug.DrawRay(rayOrigin, directionX * rayLength * Vector2.right, Color.red);
  
             if (hit) {
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                
+                if (i == 0 && slopeAngle <= exclusionAngleMin) {
+                    Slope(ref velocity, slopeAngle, true);
+                }
+                if (i == (horizontalRayCount - 1) && slopeAngle >= exclusionAngleMax) {
+                    Slope(ref velocity, slopeAngle, false);
+                }
 
                 velocity.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
@@ -72,7 +82,7 @@ public class Controller : MonoBehaviour {
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
-            Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
+            Debug.DrawRay(rayOrigin, directionY * rayLength * Vector2.up, Color.red);
 
             if (hit) {
                 velocity.y = (hit.distance - skinWidth) * directionY;
@@ -83,6 +93,18 @@ public class Controller : MonoBehaviour {
             }
         }
         
+    }
+
+    void Slope(ref Vector3 velocity, float slopeAngle, bool above) {
+        collisionInfo.onSlope = true;
+        float moveDistance = Mathf.Abs(velocity.x);
+        velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+        if (above) {
+            velocity.y = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+        }
+        else {
+            velocity.y = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance * -1;
+        }
     }
 
     void UpdateRaycastOrigins() {
@@ -113,10 +135,12 @@ public class Controller : MonoBehaviour {
 
     public struct CollisionInfo {
         public bool above, below, left, right;
+        public bool onSlope;
 
         public void Reset() {
             above = below = false;
             left = right = false;
+            onSlope = false;
         }
     }
 }
