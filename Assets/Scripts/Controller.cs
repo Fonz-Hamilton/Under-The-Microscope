@@ -55,21 +55,40 @@ public class Controller : MonoBehaviour {
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 
                 if (i == 0 && slopeAngle <= exclusionAngleMin) {
-                    Slope(ref velocity, slopeAngle, true);
+                    collisionInfo.below = true;
+                    float distanceToSlopeStart = 0;
+                    if (slopeAngle != collisionInfo.slopeAngleOld) {
+                        distanceToSlopeStart = hit.distance - skinWidth;
+                        velocity.x -= distanceToSlopeStart * directionX;
+                    }
+
+                    Slope(ref velocity, slopeAngle);
+                    velocity.x += distanceToSlopeStart * directionX;
                 }
                 if (i == (horizontalRayCount - 1) && slopeAngle >= exclusionAngleMax) {
-                    Slope(ref velocity, slopeAngle, false);
+                    collisionInfo.above = true;
+                    float distanceToSlopeStart = 0;
+                    if (slopeAngle != collisionInfo.slopeAngleOld) {
+                        distanceToSlopeStart = hit.distance - skinWidth;
+                        velocity.x -= distanceToSlopeStart * directionX;
+                    }
+                    Slope(ref velocity, slopeAngle);
+                    velocity.x += distanceToSlopeStart * directionX;
                 }
 
                 velocity.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
 
+                if (!collisionInfo.onSlope || (slopeAngle > exclusionAngleMin && slopeAngle < exclusionAngleMax)) {
+                    if (collisionInfo.onSlope) {
+                        velocity.y = Mathf.Tan(collisionInfo.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x);
+                    }
+                }
+                
                 collisionInfo.left = directionX == -1; // if hit something going left then collisionInfo.left is true
                 collisionInfo.right = directionX == 1; // if hit something going right then collisionInfo.right is true
-
             }
-        }
-        
+        } 
     }
 
     void VerticalCollisions(ref Vector3 velocity) {
@@ -95,15 +114,28 @@ public class Controller : MonoBehaviour {
         
     }
 
-    void Slope(ref Vector3 velocity, float slopeAngle, bool above) {
+    void Slope(ref Vector3 velocity, float slopeAngle) {
         collisionInfo.onSlope = true;
         float moveDistance = Mathf.Abs(velocity.x);
-        velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
-        if (above) {
-            velocity.y = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+        float slopeVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+        
+
+        if (collisionInfo.below) {
+            if(velocity.y <= slopeVelocityY) {
+                velocity.y = slopeVelocityY;
+                velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+                collisionInfo.slopeAngle = slopeAngle;
+            }
+            
         }
-        else {
-            velocity.y = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance * -1;
+        else if (collisionInfo.above) {
+            if(velocity.y <= slopeVelocityY) {
+                velocity.y = slopeVelocityY * -1;
+                velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+                collisionInfo.slopeAngle = slopeAngle;
+            }
+            
         }
     }
 
@@ -136,11 +168,15 @@ public class Controller : MonoBehaviour {
     public struct CollisionInfo {
         public bool above, below, left, right;
         public bool onSlope;
+        public float slopeAngle ,slopeAngleOld;
 
         public void Reset() {
             above = below = false;
             left = right = false;
             onSlope = false;
+
+            slopeAngleOld = slopeAngle;
+            slopeAngle = 0;
         }
     }
 }

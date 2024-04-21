@@ -1,6 +1,8 @@
-This is just for messing around in Unity.
+This is just for messing around and learning Unity.
 
-This was for the game jam ISOU by Artindi but I wont make the deadline
+Big thanks to Sebastian Lague's platformer tutorial that I have re-purposed to fit my requirements 
+
+This was for the game jam ISOU by Artindi but I didn't make the deadline
 so I'm giving myself another week.
 
 Game is about microbes in a microscope
