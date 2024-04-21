@@ -44,6 +44,8 @@ public class Controller : MonoBehaviour {
         float directionX = Mathf.Sign(velocity.x);
         float rayLength = Mathf.Abs(velocity.x) + skinWidth;
 
+        bool bottom = false;
+        bool top = false;
         for (int i = 0; i < horizontalRayCount; i++) {
             Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (horizontalRaySpacing * i);
@@ -56,6 +58,7 @@ public class Controller : MonoBehaviour {
                 
                 if (i == 0 && slopeAngle <= exclusionAngleMin) {
                     collisionInfo.below = true;
+                    bottom = true;
                     float distanceToSlopeStart = 0;
                     if (slopeAngle != collisionInfo.slopeAngleOld) {
                         distanceToSlopeStart = hit.distance - skinWidth;
@@ -65,8 +68,9 @@ public class Controller : MonoBehaviour {
                     Slope(ref velocity, slopeAngle);
                     velocity.x += distanceToSlopeStart * directionX;
                 }
-                if (i == (horizontalRayCount - 1) && slopeAngle >= exclusionAngleMax) {
+               else if (i == (horizontalRayCount - 1) && slopeAngle >= exclusionAngleMax) {
                     collisionInfo.above = true;
+                    top = true;
                     float distanceToSlopeStart = 0;
                     if (slopeAngle != collisionInfo.slopeAngleOld) {
                         distanceToSlopeStart = hit.distance - skinWidth;
@@ -75,7 +79,11 @@ public class Controller : MonoBehaviour {
                     Slope(ref velocity, slopeAngle);
                     velocity.x += distanceToSlopeStart * directionX;
                 }
-
+                if(top == true && bottom == true) {
+                    print("test");
+                    velocity.x = 0;
+                    velocity.y = 0;
+                }
                 velocity.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
 
@@ -111,7 +119,21 @@ public class Controller : MonoBehaviour {
                 collisionInfo.above = directionY == 1; // if hit something going up then collisionInfo.above is true
             }
         }
-        
+        if(collisionInfo.onSlope) {
+            float directionX = Mathf.Sign(velocity.x);
+            rayLength = Mathf.Abs(velocity.x) + skinWidth;
+            Vector2 rayOrigin = ((directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight) + Vector2.up * velocity.y;
+
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+
+            if(hit) {
+                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                if(slopeAngle != collisionInfo.slopeAngle) {
+                    velocity.x = (hit.distance - skinWidth) * directionX;
+                    collisionInfo.slopeAngle = slopeAngle;
+                }
+            }
+        }
     }
 
     void Slope(ref Vector3 velocity, float slopeAngle) {
@@ -137,6 +159,7 @@ public class Controller : MonoBehaviour {
             }
             
         }
+        
     }
 
     void UpdateRaycastOrigins() {
