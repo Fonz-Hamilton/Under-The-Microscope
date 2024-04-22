@@ -6,17 +6,30 @@ public class ObjectController : RaycastController {
     public Vector3 move;
     public LayerMask pushMask;          // mask for things that can be pushed
 
+    public float speed;
+    int fromWaypointIndex;
+    float percentBetweenWaypoints;
+
+    public Vector3[] localWaypoints;
+    Vector3[] globalWaypoints;
+
     List<PushedEntity> pushedEntity;    // List to store pushed objects
+    Dictionary<Transform, Controller> pushedDictionary = new();
 
     public override void Start() {
         base.Start();                   // call the Start() method for RaycastController
+
+        globalWaypoints = new Vector3[localWaypoints.Length];
+        for(int i = 0; i < globalWaypoints.Length; i++) {
+            globalWaypoints[i] = localWaypoints[i] + transform.position;
+        }
     }
 
 
     void Update() {
         UpdateRaycastOrigins();
 
-        Vector3 velocity = move * Time.deltaTime;
+        Vector3 velocity = CalculateObstacleMovement();
 
         CalculatePushAway(velocity);
         // Method for Enities speed
@@ -24,10 +37,39 @@ public class ObjectController : RaycastController {
         // Movement of the moving object
         transform.Translate(velocity);
     }
+
+    Vector3 CalculateObstacleMovement() {
+        int toWaypointIndex = fromWaypointIndex + 1;    // +1 cause we want next one in the array
+        float distanceBetweenWaypoints = Vector3.Distance(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]);
+        percentBetweenWaypoints += Time.deltaTime * speed / distanceBetweenWaypoints;
+
+        // Lerp Interpolates between the points
+        Vector3 newPos = Vector3.Lerp(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex], percentBetweenWaypoints);
+
+        // if you have reached the next waypoint
+        if(percentBetweenWaypoints >= 1) {
+            // reset percentage
+            percentBetweenWaypoints = 0;
+            fromWaypointIndex++;
+
+            // when we get to the end, reverse
+            if(fromWaypointIndex >= globalWaypoints.Length - 1) {
+                fromWaypointIndex = 0;
+                System.Array.Reverse(globalWaypoints);
+            }
+        }
+
+        return newPos - transform.position;
+
+    }
     void PushEntity() {
         // Loop through each pushed entity
         foreach (PushedEntity pushed in pushedEntity) {
+            if(!pushedDictionary.ContainsKey(pushed.transform)) {
+                pushedDictionary.Add(pushed.transform, pushed.transform.GetComponent<Controller>());
+            }
             // Call the move method of the Controller script attached to the pushed entity
+            pushedDictionary[pushed.transform].Move(pushed.velocity);
             pushed.transform.GetComponent<Controller>().Move(pushed.velocity);
         }
     }
@@ -98,12 +140,25 @@ public class ObjectController : RaycastController {
     }
     // keeps the data of the entity that is veing moved / pushed by the moving object
     struct PushedEntity {
-        public Transform transform;
-        public Vector3 velocity;
+        public Transform transform;     // Transform the pushed entity
+        public Vector3 velocity;        // Velocity to push the entity
         
         public PushedEntity(Transform _transform, Vector3 _velocity) {
             transform = _transform;
             velocity = _velocity;
         }
+    }
+
+    void OnDrawGizmos() {
+        if(localWaypoints != null) {
+            Gizmos.color = Color.red;
+            float size = .3f;
+
+            for(int i = 0; i < localWaypoints.Length; i++) {
+                Vector3 globalWaypointPos = (Application.isPlaying) ? globalWaypoints[i] : localWaypoints[i] + transform.position;
+                Gizmos.DrawLine(globalWaypointPos - Vector3.up * size, globalWaypointPos + Vector3.up * size);
+                Gizmos.DrawLine(globalWaypointPos - Vector3.left * size, globalWaypointPos + Vector3.left * size);
+            }
+        }    
     }
 }

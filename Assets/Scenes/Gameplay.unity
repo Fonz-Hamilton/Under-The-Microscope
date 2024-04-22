@@ -596,8 +596,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828891574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -5.76, y: 7.77, z: -10}
+  m_LocalScale: {x: 1.0625, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -948,7 +948,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449460697}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: 1.71, z: -0.025913792}
+  m_LocalPosition: {x: 6.81, y: -8.3, z: -0.025913792}
   m_LocalScale: {x: 5.1332626, y: 1.9012084, z: 1.9012084}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1046,7 +1046,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1 &1600013461
 GameObject:
@@ -1194,7 +1194,7 @@ GameObject:
   - component: {fileID: 1819586760}
   - component: {fileID: 1819586764}
   - component: {fileID: 1819586765}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Quad (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1285,7 +1285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819586759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 1.8, z: 0.016182585}
+  m_LocalPosition: {x: 7.18, y: -5.2, z: 0.016182585}
   m_LocalScale: {x: 2.2116575, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1306,13 +1306,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   horizontalRayCount: 0
   verticalRayCount: 0
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   colliders: {fileID: 0}
-  move: {x: -2, y: 0, z: 0}
+  move: {x: 0, y: -1, z: 0}
   pushMask:
     serializedVersion: 2
     m_Bits: 64
@@ -1335,7 +1335,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1 &2039527845
 GameObject:

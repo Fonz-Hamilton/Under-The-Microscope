@@ -51,6 +51,11 @@ public class Controller : RaycastController {
             Debug.DrawRay(rayOrigin, directionX * rayLength * Vector2.right, Color.red);
  
             if (hit) {
+                // if stuck in a moving object, this allows to skip ahead to the next ray
+                // Might need to take out
+                if(hit.distance == 0) {
+                    continue;
+                }
                 // Calculate the slope angle of the surface
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 
@@ -120,6 +125,11 @@ public class Controller : RaycastController {
             Debug.DrawRay(rayOrigin, directionY * rayLength * Vector2.up, Color.red);
 
             if (hit) {
+                // if stuck in a moving object, this allows to skip ahead to the next ray
+                // Might need to take out
+                if (hit.distance == 0) {
+                    continue;
+                }
                 // Update velocity and ray length based on collision
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
