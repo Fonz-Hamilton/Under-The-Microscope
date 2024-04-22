@@ -2,27 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof (BoxCollider2D))]
-public class Controller : MonoBehaviour {
 
-    const float skinWidth = .015f;
-    public LayerMask collisionMask;
-    public int horizontalRayCount = 4;
-    public int verticalRayCount = 4;
+public class Controller : RaycastController {
 
     float exclusionAngleMin = 80;
     float exclusionAngleMax = 100;
 
-    float horizontalRaySpacing;
-    float verticalRaySpacing;
-    new BoxCollider2D collider;
-    RaycastOrigins raycastOrigins;
-
     public CollisionInfo collisionInfo;
 
-    void Start() {
-        collider = GetComponent<BoxCollider2D>();
-        CalculateRaySpacing();              // maybe put back in update if needed
+    public override void Start() {
+        base.Start();
     }
 
     public void Move(Vector3 velocity) {
@@ -39,6 +28,7 @@ public class Controller : MonoBehaviour {
         transform.Translate(velocity);
     }
 
+    // this is kind of a fucking mess and I want to consolidate
     void HorizontalCollisions(ref Vector3 velocity) {
         
         float directionX = Mathf.Sign(velocity.x);
@@ -80,9 +70,8 @@ public class Controller : MonoBehaviour {
                     velocity.x += distanceToSlopeStart * directionX;
                 }
                 if(top == true && bottom == true) {
-                    print("test");
-                    velocity.x = 0;
-                    velocity.y = 0;
+                    velocity.x = (hit.distance - skinWidth) * directionX;
+                    velocity.y = (hit.distance - skinWidth) * Mathf.Sign(velocity.y);
                 }
                 velocity.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
@@ -92,7 +81,6 @@ public class Controller : MonoBehaviour {
                         velocity.y = Mathf.Tan(collisionInfo.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x);
                     }
                 }
-                
                 collisionInfo.left = directionX == -1; // if hit something going left then collisionInfo.left is true
                 collisionInfo.right = directionX == 1; // if hit something going right then collisionInfo.right is true
             }
@@ -141,51 +129,17 @@ public class Controller : MonoBehaviour {
         float moveDistance = Mathf.Abs(velocity.x);
         float slopeVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
 
-        
+        if (velocity.y <= slopeVelocityY) {
+            velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+            collisionInfo.slopeAngle = slopeAngle;
 
-        if (collisionInfo.below) {
-            if(velocity.y <= slopeVelocityY) {
+            if (collisionInfo.below) {
                 velocity.y = slopeVelocityY;
-                velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
-                collisionInfo.slopeAngle = slopeAngle;
             }
-            
-        }
-        else if (collisionInfo.above) {
-            if(velocity.y <= slopeVelocityY) {
+            else if (collisionInfo.above) {
                 velocity.y = slopeVelocityY * -1;
-                velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
-                collisionInfo.slopeAngle = slopeAngle;
             }
-            
-        }
-        
-    }
-
-    void UpdateRaycastOrigins() {
-        Bounds bounds = collider.bounds;
-        bounds.Expand(skinWidth * -2);
-
-        raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
-        raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
-        raycastOrigins.topLeft = new Vector2(bounds.min.x, bounds.max.y);
-        raycastOrigins.topRight = new Vector2(bounds.max.x, bounds.max.y);
-
-    }
-
-    void CalculateRaySpacing() {
-        Bounds bounds = collider.bounds;
-        bounds.Expand(skinWidth * -2);
-
-        horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
-        verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
-
-        horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
-        verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
-    }
-
-    struct RaycastOrigins {
-        public Vector2 topLeft, topRight, bottomLeft, bottomRight;
+        }  
     }
 
     public struct CollisionInfo {
