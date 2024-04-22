@@ -15,11 +15,11 @@ public class ObjectController : RaycastController {
         UpdateRaycastOrigins();
 
         Vector3 velocity = move * Time.deltaTime;
-        PushAway(velocity);
+        CalculatePushAway(velocity);
         transform.Translate(velocity);
     }
 
-    void PushAway(Vector3 velocity) {
+    void CalculatePushAway(Vector3 velocity) {
         HashSet<Transform> pushAway = new HashSet<Transform>();
         float directionX = Mathf.Sign(velocity.x);
         float directionY = Mathf.Sign(velocity.y);

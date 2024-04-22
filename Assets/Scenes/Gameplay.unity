@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 20326767}
   - component: {fileID: 20326766}
   - component: {fileID: 20326769}
+  - component: {fileID: 20326770}
   m_Layer: 7
   m_Name: Quad (1)
   m_TagString: Untagged
@@ -233,6 +234,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &20326770
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20326765}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &138231243
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,6 +267,7 @@ GameObject:
   - component: {fileID: 138231246}
   - component: {fileID: 138231245}
   - component: {fileID: 138231244}
+  - component: {fileID: 138231248}
   m_Layer: 7
   m_Name: Quad (2)
   m_TagString: Untagged
@@ -343,6 +366,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90.264}
+--- !u!50 &138231248
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138231243}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &500583621
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +399,7 @@ GameObject:
   - component: {fileID: 500583624}
   - component: {fileID: 500583623}
   - component: {fileID: 500583622}
+  - component: {fileID: 500583626}
   m_Layer: 7
   m_Name: Quad (6)
   m_TagString: Untagged
@@ -453,6 +498,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 50.75}
+--- !u!50 &500583626
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500583621}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &828891574
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +615,7 @@ GameObject:
   - component: {fileID: 1205801752}
   - component: {fileID: 1205801751}
   - component: {fileID: 1205801750}
+  - component: {fileID: 1205801754}
   m_Layer: 7
   m_Name: Quad (7)
   m_TagString: Untagged
@@ -647,6 +714,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 50.75}
+--- !u!50 &1205801754
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205801749}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1336077860
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,6 +747,7 @@ GameObject:
   - component: {fileID: 1336077863}
   - component: {fileID: 1336077862}
   - component: {fileID: 1336077861}
+  - component: {fileID: 1336077865}
   m_Layer: 7
   m_Name: Quad (9)
   m_TagString: Untagged
@@ -757,6 +846,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -46.887}
+--- !u!50 &1336077865
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336077860}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1449460697
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,6 +882,7 @@ GameObject:
   - component: {fileID: 1449460704}
   - component: {fileID: 1449460703}
   - component: {fileID: 1449460706}
+  - component: {fileID: 1449460707}
   m_Layer: 6
   m_Name: Quad
   m_TagString: Player
@@ -916,6 +1027,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba34a1bb821b644ab088f5d079f7532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &1449460707
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449460697}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1600013461
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +1060,7 @@ GameObject:
   - component: {fileID: 1600013464}
   - component: {fileID: 1600013463}
   - component: {fileID: 1600013462}
+  - component: {fileID: 1600013466}
   m_Layer: 7
   m_Name: Quad (4)
   m_TagString: Untagged
@@ -1026,6 +1159,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180.028}
+--- !u!50 &1600013466
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600013461}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1819586759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,6 +1193,7 @@ GameObject:
   - component: {fileID: 1819586761}
   - component: {fileID: 1819586760}
   - component: {fileID: 1819586764}
+  - component: {fileID: 1819586765}
   m_Layer: 7
   m_Name: Quad (5)
   m_TagString: Untagged
@@ -1130,7 +1285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819586759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.21, y: -5.13, z: 0.016182585}
+  m_LocalPosition: {x: 10, y: 1.8, z: 0.016182585}
   m_LocalScale: {x: 2.2116575, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1157,10 +1312,31 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   colliders: {fileID: 0}
-  move: {x: 0, y: 1, z: 0}
+  move: {x: -2, y: 0, z: 0}
   pushMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!50 &1819586765
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819586759}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2039527845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,6 +1349,7 @@ GameObject:
   - component: {fileID: 2039527848}
   - component: {fileID: 2039527847}
   - component: {fileID: 2039527846}
+  - component: {fileID: 2039527850}
   m_Layer: 7
   m_Name: Quad (3)
   m_TagString: Untagged
@@ -1271,6 +1448,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90.275}
+--- !u!50 &2039527850
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039527845}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2079124574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,6 +1481,7 @@ GameObject:
   - component: {fileID: 2079124577}
   - component: {fileID: 2079124576}
   - component: {fileID: 2079124575}
+  - component: {fileID: 2079124579}
   m_Layer: 7
   m_Name: Quad (8)
   m_TagString: Untagged
@@ -1381,3 +1580,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -103.422}
+--- !u!50 &2079124579
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079124574}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
