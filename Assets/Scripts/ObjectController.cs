@@ -7,8 +7,14 @@ public class ObjectController : RaycastController {
     public LayerMask pushMask;          // mask for things that can be pushed
 
     public float speed;
+    public bool cyclic;
+    public float waitTime;
+    [Range(0,3)]
+    public float easeAmount;
+    
     int fromWaypointIndex;
     float percentBetweenWaypoints;
+    float nextMoveTime;
 
     public Vector3[] localWaypoints;
     Vector3[] globalWaypoints;
@@ -38,14 +44,29 @@ public class ObjectController : RaycastController {
         transform.Translate(velocity);
     }
 
+    float Ease(float x) {
+        float a = easeAmount + 1;
+        return Mathf.Pow(x, a) / (Mathf.Pow(x, a) + Mathf.Pow(1 - x, a));
+    }
+
     Vector3 CalculateObstacleMovement() {
-        int toWaypointIndex = fromWaypointIndex + 1;    // +1 cause we want next one in the array
+
+        if(Time.time < nextMoveTime) {
+            return Vector3.zero;
+        }
+
+
+        fromWaypointIndex %= globalWaypoints.Length; // resets from waypoint index when done
+        // +1 cause we want next one in the array
+        // reset when reaches global waypoints
+        int toWaypointIndex = (fromWaypointIndex + 1) % globalWaypoints.Length;    
         float distanceBetweenWaypoints = Vector3.Distance(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]);
         percentBetweenWaypoints += Time.deltaTime * speed / distanceBetweenWaypoints;
+        percentBetweenWaypoints = Mathf.Clamp01(percentBetweenWaypoints);
+        float easedPercentBetweenWaypoints = Ease(percentBetweenWaypoints);
 
         // Lerp Interpolates between the points
-        Vector3 newPos = Vector3.Lerp(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex], percentBetweenWaypoints);
-
+        Vector3 newPos = Vector3.Lerp(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex], easedPercentBetweenWaypoints);
         // if you have reached the next waypoint
         if(percentBetweenWaypoints >= 1) {
             // reset percentage
@@ -53,10 +74,12 @@ public class ObjectController : RaycastController {
             fromWaypointIndex++;
 
             // when we get to the end, reverse
-            if(fromWaypointIndex >= globalWaypoints.Length - 1) {
+            if((fromWaypointIndex >= globalWaypoints.Length - 1) && !cyclic) {
                 fromWaypointIndex = 0;
                 System.Array.Reverse(globalWaypoints);
             }
+
+            nextMoveTime = Time.time + waitTime;
         }
 
         return newPos - transform.position;
