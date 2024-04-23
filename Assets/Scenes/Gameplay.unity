@@ -573,7 +573,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 11.49288
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -597,7 +597,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828891574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.76, y: 7.77, z: -10}
+  m_LocalPosition: {x: -0.55, y: 1.6, z: -10}
   m_LocalScale: {x: 1.0625, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -617,7 +617,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1449460704}
-  focusAreaSize: {x: 10, y: 10}
+  focusAreaSize: {x: 10, y: 10, z: 0}
+  verticalOffset: 0
+  lookAheadDstX: 0
+  lookSmoothTimeX: 0
+  verticalSmoothTime: 0
 --- !u!1 &1205801749
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,8 +967,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449460697}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.3, y: 8.73, z: -0.025913792}
-  m_LocalScale: {x: 5.1332626, y: 1.9012084, z: 1.9012084}
+  m_LocalPosition: {x: 0.06, y: -0.24, z: -0.025913792}
+  m_LocalScale: {x: 3.0915074, y: 3.22032, z: 1.1450027}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1004,6 +1008,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   colliders: {fileID: 0}
+  playerInput: {x: 0, y: 0}
 --- !u!61 &1449460705
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1301,7 +1306,7 @@ Transform:
   m_GameObject: {fileID: 1819586759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.63, y: 2.36, z: 0.016182585}
-  m_LocalScale: {x: 2.2116575, y: 1, z: 1}
+  m_LocalScale: {x: 3.9809835, y: 2.5875, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

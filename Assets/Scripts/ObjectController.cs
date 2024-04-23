@@ -114,7 +114,7 @@ public class ObjectController : RaycastController {
                 rayOrigin += Vector2.right * (verticalRaySpacing * i);      // adjust origin based on spacing
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, pushMask);
 
-                Debug.DrawRay(rayOrigin, directionY * rayLength * Vector2.up, Color.blue);
+                Debug.DrawRay(rayOrigin, directionY * Vector2.up, Color.blue);
 
                 if (hit) {
                     // If the hit object has not been pushed yet
@@ -142,7 +142,7 @@ public class ObjectController : RaycastController {
                 rayOrigin += Vector2.up * (horizontalRaySpacing * i);       // adjust origin based on spacing
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, pushMask);
 
-                Debug.DrawRay(rayOrigin, directionX * rayLength * Vector2.right, Color.blue);
+                Debug.DrawRay(rayOrigin, directionX * Vector2.right, Color.blue);
 
                 if (hit) {
                     // If the hit object has not been pushed yet

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
+
 [RequireComponent(typeof(Player))]
 public class PlayerInput : MonoBehaviour {
     Player player;
@@ -18,4 +18,4 @@ public class PlayerInput : MonoBehaviour {
 
     }
 }
-*/
+
