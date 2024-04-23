@@ -6,3 +6,5 @@ This was for the game jam ISOU by Artindi but I didn't make the deadline
 so I'm giving myself another week.
 
 Game is about microbes in a microscope
+
+Will learn Godot for the next one
