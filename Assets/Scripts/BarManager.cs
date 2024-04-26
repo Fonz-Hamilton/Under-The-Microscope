@@ -8,10 +8,11 @@ public class BarManager : MonoBehaviour {
     
     public Slider slider;
 
-    public void SetMaxEnergy(float energy) {
+    public void SetMinMaxEnergy(float energyMin, float energyMax) {
        
-        slider.maxValue = energy;
-        slider.value = energy;
+        slider.maxValue = energyMax;
+        slider.minValue = energyMin;
+        slider.value = energyMax;
     }
     public void SetEnergy(float energy) {
         
@@ -20,6 +21,3 @@ public class BarManager : MonoBehaviour {
 
 }
 
-/*energyAmount = Mathf.Clamp(energyAmount, 0, 100);
-        energyBar.fillAmount = energyAmount / 100;
-*/

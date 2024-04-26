@@ -13,16 +13,19 @@ public class Player : MonoBehaviour {
     float velocityYSmoothing;
 
     public float maxEnergy = 100;
+    public float minEnergy = 0;
     public float currentEnergy;
     public BarManager energyBar;
 
     Vector2 directionalInput;
 
     void Start() {
+
+
         controller = GetComponent<Controller>();
 
         currentEnergy = maxEnergy;
-        energyBar.SetMaxEnergy(maxEnergy);
+        energyBar.SetMinMaxEnergy(minEnergy, maxEnergy);
        
     }
 
@@ -40,21 +43,23 @@ public class Player : MonoBehaviour {
 
         controller.Move(velocity * Time.deltaTime, directionalInput);
 
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            LoseEnergy(10f);
-        }
+        
+        LoseEnergy(.5f * Time.deltaTime);
+        
         if(Input.GetKeyDown(KeyCode.LeftShift)) {
-            GainEnergy(10f);
+            GainEnergy(5f);
         }
         
     }
 
     public void LoseEnergy(float lostEnergy) {
         currentEnergy -= lostEnergy;
+        currentEnergy = Mathf.Clamp(currentEnergy, minEnergy, maxEnergy);
         energyBar.SetEnergy(currentEnergy);
     }
     public void GainEnergy(float gainEnergy) {
         currentEnergy += gainEnergy;
+        currentEnergy = Mathf.Clamp(currentEnergy, minEnergy, maxEnergy);
         energyBar.SetEnergy(currentEnergy);
     }
 

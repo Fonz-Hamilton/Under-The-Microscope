@@ -12,10 +12,21 @@ public class Controller : RaycastController {
     public Vector2 playerInput;
 
     
+    public Player player;
+    public EnergyInfo energyInfo;
+
+    
     public CollisionInfo collisionInfo;
 
     public override void Start() {
         base.Start();       // call the Start() method for RaycastController
+        // Find the player GameObject with the "Player" tag
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        // Get the Player component attached to the player GameObject
+        if (playerObject != null) {
+            player = playerObject.GetComponent<Player>();
+        }
     }
 
     // Overload method so objectController doesnt have to worry about player input
@@ -59,9 +70,13 @@ public class Controller : RaycastController {
             Debug.DrawRay(rayOrigin, directionX * Vector2.right, Color.red);
  
             if (hit) {
+                if (hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("Energy")) {
+                    CollectEnergy(hit.collider.gameObject);
+                }
+
                 // if stuck in a moving object, this allows to skip ahead to the next ray
                 // Might need to take out
-                if(hit.distance == 0) {
+                if (hit.distance == 0) {
                     continue;
                 }
                 // Calculate the slope angle of the surface
@@ -196,6 +211,27 @@ public class Controller : RaycastController {
             }
         }  
     }
+
+    private void CollectEnergy(GameObject energy) {
+        
+        if(player != null) {
+            // Cache the EnergyInfo component reference
+            EnergyInfo energyInfo = energy.GetComponent<EnergyInfo>();
+            if (energyInfo != null) {
+                // Gain energy based on the energy amount from the EnergyInfo component
+                player.GainEnergy(energyInfo.GetEnergyAmount());
+            }
+            else {
+                Debug.Log("Energy bitch is null");
+            }
+
+        }
+        else {
+            Debug.Log("Player bitch is null");
+        }
+        Destroy(energy);
+    }
+
 
     public struct CollisionInfo {
         public bool above, below, left, right;
