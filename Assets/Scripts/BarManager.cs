@@ -7,6 +7,8 @@ public class BarManager : MonoBehaviour {
 
     
     public Slider slider;
+    public Image healthBar;
+    public float HealthAmount;
 
     public void SetMinMaxEnergy(float energyMin, float energyMax) {
        
@@ -17,6 +19,10 @@ public class BarManager : MonoBehaviour {
     public void SetEnergy(float energy) {
         
         slider.value = energy;
+    }
+
+    public void SetHealth(float health) {
+        HealthAmount = health;
     }
 
 }

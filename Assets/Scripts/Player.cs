@@ -12,10 +12,17 @@ public class Player : MonoBehaviour {
     float velocityXSmoothing;
     float velocityYSmoothing;
 
-    public float maxEnergy = 100;
-    public float minEnergy = 0;
+    public float maxEnergy = 100f;
+    public float minEnergy = 0f;
     public float currentEnergy;
-    public BarManager energyBar;
+
+    public float maxHealth = 100f;
+    public float minHealth = 0f;
+    public float currentHealth;
+
+    public float rateOfEnergyLoss = 2.5f;
+    public float rateOfHealthLoss = 2.5f;
+    public BarManager VitalsBar;
 
     Vector2 directionalInput;
 
@@ -25,7 +32,9 @@ public class Player : MonoBehaviour {
         controller = GetComponent<Controller>();
 
         currentEnergy = maxEnergy;
-        energyBar.SetMinMaxEnergy(minEnergy, maxEnergy);
+        currentHealth = maxHealth;
+        VitalsBar.SetMinMaxEnergy(minEnergy, maxEnergy);
+        VitalsBar.SetHealth(maxHealth);
        
     }
 
@@ -44,7 +53,11 @@ public class Player : MonoBehaviour {
         controller.Move(velocity * Time.deltaTime, directionalInput);
 
         
-        LoseEnergy(.5f * Time.deltaTime);
+        LoseEnergy(rateOfEnergyLoss * Time.deltaTime);
+
+        if (currentEnergy <= 0) {
+            LoseHealth(rateOfHealthLoss * Time.deltaTime);
+        }
         
         if(Input.GetKeyDown(KeyCode.LeftShift)) {
             GainEnergy(5f);
@@ -55,12 +68,17 @@ public class Player : MonoBehaviour {
     public void LoseEnergy(float lostEnergy) {
         currentEnergy -= lostEnergy;
         currentEnergy = Mathf.Clamp(currentEnergy, minEnergy, maxEnergy);
-        energyBar.SetEnergy(currentEnergy);
+        VitalsBar.SetEnergy(currentEnergy);
     }
     public void GainEnergy(float gainEnergy) {
         currentEnergy += gainEnergy;
         currentEnergy = Mathf.Clamp(currentEnergy, minEnergy, maxEnergy);
-        energyBar.SetEnergy(currentEnergy);
+        VitalsBar.SetEnergy(currentEnergy);
+    }
+    public void LoseHealth(float lostHealth) {
+        currentHealth -= lostHealth;
+        currentHealth = Mathf.Clamp(currentHealth, minHealth, maxHealth);
+        VitalsBar.healthBar.fillAmount = currentHealth / 100f;
     }
 
 }
