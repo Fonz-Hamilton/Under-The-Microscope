@@ -62,6 +62,8 @@ public class Player : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.LeftShift)) {
             GainEnergy(5f);
         }
+
+        
         
     }
 
