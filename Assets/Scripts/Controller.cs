@@ -148,6 +148,9 @@ public class Controller : RaycastController {
             Debug.DrawRay(rayOrigin, directionY * Vector2.up, Color.red);
 
             if (hit) {
+                if (hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("Energy")) {
+                    CollectEnergy(hit.collider.gameObject);
+                }
                 // if stuck in a moving object, this allows to skip ahead to the next ray
                 // Might need to take out
                 if (hit.distance == 0) {
@@ -222,12 +225,12 @@ public class Controller : RaycastController {
                 player.GainEnergy(energyInfo.GetEnergyAmount());
             }
             else {
-                Debug.Log("Energy bitch is null");
+                Debug.Log("Energy: bitch is null");
             }
 
         }
         else {
-            Debug.Log("Player bitch is null");
+            Debug.Log("Player: bitch is null");
         }
         Destroy(energy);
     }
