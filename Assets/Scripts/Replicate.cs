@@ -15,6 +15,7 @@ public class Replicate : MonoBehaviour {
     private IEnumerator ReplicateBacteria() {
         while (true) {
             if (player.currentEnergy > 0) {
+                new WaitForSeconds(interval);
                 ReplicatePlayer();
 
                 // Wait for the replication interval
